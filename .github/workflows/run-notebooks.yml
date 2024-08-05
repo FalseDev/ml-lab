@@ -42,7 +42,9 @@ jobs:
         for file in output/*.html; do
           filename=$(basename "$file")
           pdfname="${filename%.html}.pdf"
-          echo "<li><a href=\"$filename\">$filename</a> (<a href=\"$pdfname\">PDF</a>)</li>" >> output/index.html
+          if [ "$filename" != "index.html" ]; then
+            echo "<li><a href=\"$filename\">$filename</a> (<a href=\"$pdfname\">PDF</a>)</li>" >> output/index.html
+          fi
         done
         echo "</ul></body></html>" >> output/index.html
 

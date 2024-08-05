@@ -25,13 +25,26 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install nbconvert jupyter pandas numpy matplotlib scikit-learn
+        sudo apt-get update
+        sudo apt-get install -y texlive-xetex texlive-fonts-recommended texlive-plain-generic
 
     - name: Run Jupyter Notebooks
       run: |
         mkdir -p output
         find . -name "*.ipynb" -print0 | while IFS= read -r -d '' notebook; do
           jupyter nbconvert --to html --output-dir output --execute "$notebook"
+          jupyter nbconvert --to pdf --output-dir output --execute "$notebook"
         done
+
+    - name: Create index.html
+      run: |
+        echo "<html><body><h1>Index of Notebook Outputs</h1><ul>" > output/index.html
+        for file in output/*.html; do
+          filename=$(basename "$file")
+          pdfname="${filename%.html}.pdf"
+          echo "<li><a href=\"$filename\">$filename</a> (<a href=\"$pdfname\">PDF</a>)</li>" >> output/index.html
+        done
+        echo "</ul></body></html>" >> output/index.html
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4

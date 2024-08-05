@@ -10,6 +10,7 @@
     packages."x86_64-linux".default = pkgs.mkShell {
 
       packages = with pkgs; [
+        pre-commit
         (python311.withPackages (ps: with ps; [
           numpy
           pandas

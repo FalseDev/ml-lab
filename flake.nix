@@ -21,6 +21,7 @@
 
           pyright
           notebook
+          nbdime
         ]))
       ];
     };

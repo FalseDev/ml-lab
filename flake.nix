@@ -18,6 +18,7 @@
           seaborn
           scikit-learn
           opencv4
+          pip
 
           pyright
           notebook

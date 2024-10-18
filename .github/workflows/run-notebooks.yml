@@ -39,8 +39,8 @@ jobs:
           jupyter nbconvert --to html --output-dir output --execute "$notebook"
           jupyter nbconvert --to pdf --output-dir output --execute "$notebook"
         done
-        pdfunite ex*.pdf full.pdf
-        convert -density 300 full.pdf -quality 100 images.pdf
+        pdfunite output/ex*.pdf output/full.pdf
+        convert -density 300 output/full.pdf -quality 100 output/images.pdf
 
 
     - name: Create index.html

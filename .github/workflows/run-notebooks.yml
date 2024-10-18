@@ -29,7 +29,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r ./requirements.txt
         sudo apt-get update
-        sudo apt-get install -y pandoc texlive-xetex texlive-fonts-recommended texlive-plain-generic
+        sudo apt-get install -y pandoc texlive-xetex texlive-fonts-recommended texlive-plain-generic poppler-utils imagemagick
+
 
     - name: Run Jupyter Notebooks
       run: |
@@ -38,6 +39,9 @@ jobs:
           jupyter nbconvert --to html --output-dir output --execute "$notebook"
           jupyter nbconvert --to pdf --output-dir output --execute "$notebook"
         done
+        pdfunite ex*.pdf full.pdf
+        convert -density 300 full.pdf -quality 100 images.pdf
+
 
     - name: Create index.html
       run: |
